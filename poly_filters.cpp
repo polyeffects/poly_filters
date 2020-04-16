@@ -221,7 +221,7 @@ run(LV2_Handle instance, uint32_t n_samples)
             float fSlow2 = (0.00514551532f * fSlow1);
 			fRec5[0] = (fSlow0 + (0.999000013f * fRec5[1]));
 			float fTemp0 = std::tan((CONST0 * std::pow(10.0f, ((3.0f * fRec5[0]) + 1.0f))));
-			float fTemp1 = fmax(-1.0f, fmin(1.0f, (100.0f * float(input_1[i]))));
+			float fTemp1 = input_1[i];
 			float fTemp2 = (17.0f - (9.69999981f * faustpower10_f(fRec5[0])));
 			float fTemp3 = (fTemp0 + 1.0f);
 			float fTemp4 = ((0.5f * ((fRec1[1] * fTemp0) / fTemp3)) + fRec2[1]);
