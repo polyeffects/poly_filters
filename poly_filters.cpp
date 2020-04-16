@@ -20,11 +20,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "warps/dsp/modulator.h"
 
 #define clamp(x, lower, upper) (fmax(lower, fmin(x, upper)))
 
 #define FILTER_URI "http://polyeffects.com/lv2/polyfilter#"
+/* 6.28318548 / 48000 */
+#define CONST0 0.0001308996975
 
 /**
    In code, ports are referred to by index.  An enumeration of port indices
@@ -214,13 +215,13 @@ run(LV2_Handle instance, uint32_t n_samples)
 
 	if (amp->filter_type == DIODE_LADDER)
     {
-		float fSlow0 = (0.00100000005f * float(cutoff_param));
-		float fSlow1 = (float(q_param) + -0.707000017f);
-		float fSlow2 = (0.00514551532f * fSlow1);
-		for (int i = 0; (i < n_samples); i = (i + 1)) {
+		for (uint32_t i = 0; (i < n_samples); i = (i + 1)) {
+            float fSlow0 = (0.00100000005f * clamp(float(cutoff_param)+cutoff_cv[i], 0.0f, 1.0f));
+            float fSlow1 = (clamp(float(q_param)+(q_cv[i]*25.0f), 0.7072f, 25.0f) + -0.707000017f);
+            float fSlow2 = (0.00514551532f * fSlow1);
 			fRec5[0] = (fSlow0 + (0.999000013f * fRec5[1]));
-			float fTemp0 = std::tan((fConst0 * std::pow(10.0f, ((3.0f * fRec5[0]) + 1.0f))));
-			float fTemp1 = std::max<float>(-1.0f, std::min<float>(1.0f, (100.0f * float(input_1[i]))));
+			float fTemp0 = std::tan((CONST0 * std::pow(10.0f, ((3.0f * fRec5[0]) + 1.0f))));
+			float fTemp1 = fmax(-1.0f, fmin(1.0f, (100.0f * float(input_1[i]))));
 			float fTemp2 = (17.0f - (9.69999981f * faustpower10_f(fRec5[0])));
 			float fTemp3 = (fTemp0 + 1.0f);
 			float fTemp4 = ((0.5f * ((fRec1[1] * fTemp0) / fTemp3)) + fRec2[1]);
@@ -256,12 +257,13 @@ run(LV2_Handle instance, uint32_t n_samples)
 	}
     else if (amp->filter_type == KORG_HPF)
     {
-		float fSlow0 = (0.00100000005f * float(cutoff_param));
-		float fSlow1 = (0.215215757f * (float(q_param) + -0.707000017f));
-		for (int i = 0; (i < n_samples); i = (i + 1)) {
+		for (uint32_t i = 0; (i < n_samples); i = (i + 1)) {
+            float fSlow0 = (0.00100000005f * clamp(float(cutoff_param)+cutoff_cv[i], 0.0f, 1.0f));
+            float fSlow1 = (0.215215757f * clamp(float(q_param)+(q_cv[i]*10.0f), 0.5, 10.0f) + -0.707000017f);
+
 			float fTemp0 = float(input_1[i]);
 			fRec4[0] = (fSlow0 + (0.999000013f * fRec4[1]));
-			float fTemp1 = std::tan((fConst0 * std::pow(10.0f, ((3.0f * fRec4[0]) + 1.0f))));
+			float fTemp1 = std::tan((CONST0 * std::pow(10.0f, ((3.0f * fRec4[0]) + 1.0f))));
 			float fTemp2 = ((fTemp0 - fRec3[1]) * fTemp1);
 			float fTemp3 = (fTemp1 + 1.0f);
 			float fTemp4 = (fTemp1 / fTemp3);
@@ -281,11 +283,11 @@ run(LV2_Handle instance, uint32_t n_samples)
 	}
     else if (amp->filter_type == KORG_LPF)
     {
-		float fSlow0 = (0.00100000005f * float(cutoff_param));
-		float fSlow1 = (0.215215757f * (float(q_param) + -0.707000017f));
-		for (int i = 0; (i < n_samples); i = (i + 1)) {
+		for (uint32_t i = 0; (i < n_samples); i = (i + 1)) {
+            float fSlow0 = (0.00100000005f * clamp(float(cutoff_param)+cutoff_cv[i], 0.0f, 1.0f));
+            float fSlow1 = (0.215215757f * clamp(float(q_param)+(q_cv[i]*10.0f), 0.5, 10.0f) + -0.707000017f);
 			fRec4[0] = (fSlow0 + (0.999000013f * fRec4[1]));
-			float fTemp0 = std::tan((fConst0 * std::pow(10.0f, ((3.0f * fRec4[0]) + 1.0f))));
+			float fTemp0 = std::tan((CONST0 * std::pow(10.0f, ((3.0f * fRec4[0]) + 1.0f))));
 			float fTemp1 = ((float(input_1[i]) - fRec3[1]) * fTemp0);
 			float fTemp2 = (fTemp0 + 1.0f);
 			float fTemp3 = (1.0f - (fTemp0 / fTemp2));
@@ -305,11 +307,12 @@ run(LV2_Handle instance, uint32_t n_samples)
 	}
     else if (amp->filter_type == MOOG_LADDER)
     {
-		float fSlow0 = (0.00100000005f * float(cutoff_param));
-		float fSlow1 = (0.0411641225f * (float(q_param) + -0.707000017f));
-		for (int i = 0; (i < n_samples); i = (i + 1)) {
+		for (uint32_t i = 0; (i < n_samples); i = (i + 1)) {
+            float fSlow0 = (0.00100000005f * clamp(float(cutoff_param)+cutoff_cv[i], 0.0f, 1.0f));
+            float fSlow1 = (0.0411641225f * clamp(float(q_param)+(q_cv[i]*25.0f), 0.7072, 25.0f) + -0.707000017f);
+
 			fRec5[0] = (fSlow0 + (0.999000013f * fRec5[1]));
-			float fTemp0 = std::tan((fConst0 * std::pow(10.0f, ((3.0f * fRec5[0]) + 1.0f))));
+			float fTemp0 = std::tan((CONST0 * std::pow(10.0f, ((3.0f * fRec5[0]) + 1.0f))));
 			float fTemp1 = (3.9000001f - (0.899999976f * std::pow(fRec5[0], 0.200000003f)));
 			float fTemp2 = (fTemp0 + 1.0f);
 			float fTemp3 = ((fTemp0 * (((float(input_1[i]) - (fSlow1 * (fTemp1 * (((fRec1[1] + (fRec2[1] * fTemp0)) + (faustpower2_f(fTemp0) * fRec3[1])) + (faustpower3_f(fTemp0) * fRec4[1]))))) / ((fSlow1 * (fTemp1 * faustpower4_f(fTemp0))) + 1.0f)) - fRec4[1])) / fTemp2);
@@ -331,12 +334,13 @@ run(LV2_Handle instance, uint32_t n_samples)
 	}
     else if (amp->filter_type == MOOG_HALF_LADDER)
     {
-		float fSlow0 = (0.00100000005f * float(cutoff_param));
-		float fSlow1 = (float(q_param) + -0.707000017f);
-		float fSlow2 = (0.082328245f * fSlow1);
-		for (int i = 0; (i < n_samples); i = (i + 1)) {
+		for (uint32_t i = 0; (i < n_samples); i = (i + 1)) {
+            float fSlow0 = (0.00100000005f * clamp(float(cutoff_param)+cutoff_cv[i], 0.0f, 1.0f));
+            float fSlow1 = (clamp(float(q_param)+(q_cv[i]*25.0f), 0.7072, 25.0f) + -0.707000017f);
+            float fSlow2 = (0.082328245f * fSlow1);
+
 			fRec4[0] = (fSlow0 + (0.999000013f * fRec4[1]));
-			float fTemp0 = std::tan((fConst0 * std::pow(10.0f, ((3.0f * fRec4[0]) + 1.0f))));
+			float fTemp0 = std::tan((CONST0 * std::pow(10.0f, ((3.0f * fRec4[0]) + 1.0f))));
 			float fTemp1 = (fTemp0 + 1.0f);
 			float fTemp2 = ((2.0f * (fTemp0 / fTemp1)) + -1.0f);
 			float fTemp3 = ((fTemp0 * (((float(input_1[i]) + (fSlow1 * (((0.0f - ((0.16465649f * fRec1[1]) + (0.082328245f * (fRec2[1] * fTemp2)))) - (0.082328245f * (((fTemp0 * fTemp2) * fRec3[1]) / fTemp1))) / fTemp1))) / ((fSlow2 * ((faustpower2_f(fTemp0) * fTemp2) / faustpower2_f(fTemp1))) + 1.0f)) - fRec3[1])) / fTemp1);
@@ -357,16 +361,16 @@ run(LV2_Handle instance, uint32_t n_samples)
 	}
     else if (amp->filter_type == OBERHEIM)
     {
-		float fSlow0 = (0.00100000005f * float(fHslider0));
-		float fSlow1 = (1.0f / float(fHslider1));
-		for (int i = 0; (i < n_samples); i = (i + 1)) {
+		for (uint32_t i = 0; (i < n_samples); i = (i + 1)) {
+            float fSlow0 = (0.00100000005f * clamp(float(cutoff_param)+cutoff_cv[i], 0.0f, 1.0f));
+            float fSlow1 = (1.0f / clamp(float(q_param)+(q_cv[i]*10.0f), 0.5, 10.0f));
 			fRec6[0] = (fSlow0 + (0.999000013f * fRec6[1]));
-			float fTemp0 = std::tan((fConst0 * std::pow(10.0f, ((3.0f * fRec6[0]) + 1.0f))));
+			float fTemp0 = std::tan((CONST0 * std::pow(10.0f, ((3.0f * fRec6[0]) + 1.0f))));
 			float fTemp1 = (fSlow1 + fTemp0);
 			float fTemp2 = (float(input_1[i]) - (fRec4[1] + (fRec5[1] * fTemp1)));
 			float fTemp3 = ((fTemp0 * fTemp1) + 1.0f);
 			float fTemp4 = ((fTemp0 * fTemp2) / fTemp3);
-			float fTemp5 = std::max<float>(-1.0f, std::min<float>(1.0f, (fRec5[1] + fTemp4)));
+			float fTemp5 = fmax(-1.0f, fmin(1.0f, (fRec5[1] + fTemp4)));
 			float fTemp6 = (1.0f - (0.333333343f * faustpower2_f(fTemp5)));
 			float fTemp7 = ((fTemp0 * fTemp5) * fTemp6);
 			float fRec0 = (fRec4[1] + fTemp7);

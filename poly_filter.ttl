@@ -32,7 +32,7 @@ polyfilter:diode_ladder
     ] , [
 	a lv2:InputPort ;
 	a lv2:ControlPort ;
-	lv2:index 0 ;
+	lv2:index 1 ;
 	lv2:symbol "Q" ;
 	lv2:name "Q" ;
         lv2:portProperty epp:hasStrictBounds ;
@@ -95,7 +95,7 @@ polyfilter:korg_hpf
     ] , [
 	a lv2:InputPort ;
 	a lv2:ControlPort ;
-	lv2:index 0 ;
+	lv2:index 1 ;
 	lv2:symbol "Q" ;
 	lv2:name "Q" ;
         lv2:portProperty epp:hasStrictBounds ;
@@ -158,7 +158,7 @@ polyfilter:korg_lpf
     ] , [
 	a lv2:InputPort ;
 	a lv2:ControlPort ;
-	lv2:index 0 ;
+	lv2:index 1 ;
 	lv2:symbol "Q" ;
 	lv2:name "Q" ;
         lv2:portProperty epp:hasStrictBounds ;
@@ -220,7 +220,7 @@ polyfilter:moog_ladder
     ] , [
 	a lv2:InputPort ;
 	a lv2:ControlPort ;
-	lv2:index 0 ;
+	lv2:index 1 ;
 	lv2:symbol "Q" ;
 	lv2:name "Q" ;
         lv2:portProperty epp:hasStrictBounds ;
@@ -283,7 +283,7 @@ polyfilter:moog_half_ladder
     ] , [
 	a lv2:InputPort ;
 	a lv2:ControlPort ;
-	lv2:index 0 ;
+	lv2:index 1 ;
 	lv2:symbol "Q" ;
 	lv2:name "Q" ;
         lv2:portProperty epp:hasStrictBounds ;
@@ -346,7 +346,7 @@ polyfilter:oberheim
     ] , [
 	a lv2:InputPort ;
 	a lv2:ControlPort ;
-	lv2:index 0 ;
+	lv2:index 1 ;
 	lv2:symbol "Q" ;
 	lv2:name "Q" ;
         lv2:portProperty epp:hasStrictBounds ;
