@@ -1,0 +1,28 @@
+@prefix doap:  <http://usefulinc.com/ns/doap#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix polyfilter: <http://polyeffects.com/lv2/polyfilter#> .
+
+polyfilter:diode_ladder
+       a lv2:Plugin ;
+       lv2:binary <poly_filter.so> ;
+       rdfs:seeAlso <poly_filter.ttl> .
+polyfilter:korg_hpf
+       a lv2:Plugin ;
+       lv2:binary <poly_filter.so> ;
+       rdfs:seeAlso <poly_filter.ttl> .
+polyfilter:korg_lpf
+       a lv2:Plugin ;
+       lv2:binary <poly_filter.so> ;
+       rdfs:seeAlso <poly_filter.ttl> .
+polyfilter:moog_ladder
+       a lv2:Plugin ;
+       lv2:binary <poly_filter.so> ;
+       rdfs:seeAlso <poly_filter.ttl> .
+polyfilter:moog_half_ladder
+       a lv2:Plugin ;
+       lv2:binary <poly_filter.so> ;
+       rdfs:seeAlso <poly_filter.ttl> .
+polyfilter:oberheim
+       a lv2:Plugin ;
+       lv2:binary <poly_filter.so> ;
+       rdfs:seeAlso <poly_filter.ttl> .

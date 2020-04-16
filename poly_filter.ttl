@@ -1,0 +1,406 @@
+@prefix doap:  <http://usefulinc.com/ns/doap#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
+@prefix ui:    <http://lv2plug.in/ns/extensions/ui#> .
+@prefix epp:   <http://lv2plug.in/ns/ext/port-props#> .
+@prefix atom:  <http://lv2plug.in/ns/ext/atom#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix polyfilter: <http://polyeffects.com/lv2/polyfilter#> .
+
+polyfilter:diode_ladder
+       a lv2:Plugin ;
+       doap:name "diodeLadder" ;
+       doap:license <http://opensource.org/licenses/gpl> ;
+       lv2:binary <poly_filter.so> ;
+       lv2:optionalFeature epp:supportsStrictBounds ;
+       lv2:optionalFeature lv2:hardRtCapable ;
+       doap:maintainer [ foaf:name "Loki Davison" ] ;
+       rdfs:comment "faust diodeLadder" ;
+    lv2:port [
+	a lv2:InputPort ;
+	a lv2:ControlPort ;
+	lv2:index 0 ;
+	lv2:symbol "cutoff" ;
+	lv2:name "cutoff" ;
+        lv2:portProperty epp:hasStrictBounds ;
+        epp:rangeSteps 999 ;
+	lv2:default 0.1 ;
+	lv2:minimum 0 ;
+	lv2:maximum 1 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:ControlPort ;
+	lv2:index 0 ;
+	lv2:symbol "Q" ;
+	lv2:name "Q" ;
+        lv2:portProperty epp:hasStrictBounds ;
+        epp:rangeSteps 2429 ;
+	lv2:default 1 ;
+	lv2:minimum 0.7072 ;
+	lv2:maximum 25 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:CVPort ;
+	lv2:index 2 ;
+	lv2:symbol "cutoff_cv" ;
+	lv2:name "Cutoff CV" ;
+    lv2:default 0.0 ;
+    lv2:minimum 0.0 ;
+    lv2:maximum 1.0 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:CVPort ;
+	lv2:index 3 ;
+	lv2:symbol "q_cv" ;
+	lv2:name "Q CV" ;
+    lv2:default 0.0 ;
+    lv2:minimum 0.0 ;
+    lv2:maximum 1.0 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:AudioPort ;
+	lv2:index 4 ;
+	lv2:symbol "in" ;
+	lv2:name "in" ;
+    ] , [
+	a lv2:OutputPort ;
+	a lv2:AudioPort ;
+	lv2:index 5 ;
+	lv2:symbol "out" ;
+	lv2:name "out" ;
+    ] .
+
+polyfilter:korg_hpf
+       a lv2:Plugin ;
+       doap:name "Korg HPF" ;
+       doap:license <http://opensource.org/licenses/gpl> ;
+       lv2:binary <poly_filter.so> ;
+       lv2:optionalFeature epp:supportsStrictBounds ;
+       lv2:optionalFeature lv2:hardRtCapable ;
+       doap:maintainer [ foaf:name "Loki Davison" ] ;
+       rdfs:comment "faust korg_hpf" ;
+    lv2:port [
+	a lv2:InputPort ;
+	a lv2:ControlPort ;
+	lv2:index 0 ;
+	lv2:symbol "cutoff" ;
+	lv2:name "cutoff" ;
+        lv2:portProperty epp:hasStrictBounds ;
+        epp:rangeSteps 999 ;
+	lv2:default 0.5 ;
+	lv2:minimum 0 ;
+	lv2:maximum 1 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:ControlPort ;
+	lv2:index 0 ;
+	lv2:symbol "Q" ;
+	lv2:name "Q" ;
+        lv2:portProperty epp:hasStrictBounds ;
+        epp:rangeSteps 950 ;
+	lv2:default 1 ;
+	lv2:minimum 0.5 ;
+	lv2:maximum 10 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:CVPort ;
+	lv2:index 2 ;
+	lv2:symbol "cutoff_cv" ;
+	lv2:name "Cutoff CV" ;
+    lv2:default 0.0 ;
+    lv2:minimum 0.0 ;
+    lv2:maximum 1.0 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:CVPort ;
+	lv2:index 3 ;
+	lv2:symbol "q_cv" ;
+	lv2:name "Q CV" ;
+    lv2:default 0.0 ;
+    lv2:minimum 0.0 ;
+    lv2:maximum 1.0 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:AudioPort ;
+	lv2:index 4 ;
+	lv2:symbol "in" ;
+	lv2:name "in" ;
+    ] , [
+	a lv2:OutputPort ;
+	a lv2:AudioPort ;
+	lv2:index 5 ;
+	lv2:symbol "out" ;
+	lv2:name "out" ;
+    ] .
+
+polyfilter:korg_lpf
+       a lv2:Plugin ;
+       doap:name "korg lpf" ;
+       doap:license <http://opensource.org/licenses/gpl> ;
+       lv2:binary <poly_filter.so> ;
+       lv2:optionalFeature epp:supportsStrictBounds ;
+       lv2:optionalFeature lv2:hardRtCapable ;
+       doap:maintainer [ foaf:name "Loki Davison" ] ;
+       rdfs:comment "faust korg_lpf" ;
+    lv2:port [
+	a lv2:InputPort ;
+	a lv2:ControlPort ;
+	lv2:index 0 ;
+	lv2:symbol "cutoff" ;
+	lv2:name "cutoff" ;
+        lv2:portProperty epp:hasStrictBounds ;
+        epp:rangeSteps 999 ;
+	lv2:default 0.5 ;
+	lv2:minimum 0 ;
+	lv2:maximum 1 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:ControlPort ;
+	lv2:index 0 ;
+	lv2:symbol "Q" ;
+	lv2:name "Q" ;
+        lv2:portProperty epp:hasStrictBounds ;
+        epp:rangeSteps 950 ;
+	lv2:default 1 ;
+	lv2:minimum 0.5 ;
+	lv2:maximum 10 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:CVPort ;
+	lv2:index 2 ;
+	lv2:symbol "cutoff_cv" ;
+	lv2:name "Cutoff CV" ;
+    lv2:default 0.0 ;
+    lv2:minimum 0.0 ;
+    lv2:maximum 1.0 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:CVPort ;
+	lv2:index 3 ;
+	lv2:symbol "q_cv" ;
+	lv2:name "Q CV" ;
+    lv2:default 0.0 ;
+    lv2:minimum 0.0 ;
+    lv2:maximum 1.0 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:AudioPort ;
+	lv2:index 4 ;
+	lv2:symbol "in" ;
+	lv2:name "in" ;
+    ] , [
+	a lv2:OutputPort ;
+	a lv2:AudioPort ;
+	lv2:index 5 ;
+	lv2:symbol "out" ;
+	lv2:name "out" ;
+    ] .
+polyfilter:moog_ladder
+       a lv2:Plugin ;
+       doap:name "moog ladder" ;
+       doap:license <http://opensource.org/licenses/gpl> ;
+       lv2:binary <poly_filter.so> ;
+       lv2:optionalFeature epp:supportsStrictBounds ;
+       lv2:optionalFeature lv2:hardRtCapable ;
+       doap:maintainer [ foaf:name "Loki Davison" ] ;
+       rdfs:comment "faust moog ladder" ;
+    lv2:port [
+	a lv2:InputPort ;
+	a lv2:ControlPort ;
+	lv2:index 0 ;
+	lv2:symbol "cutoff" ;
+	lv2:name "cutoff" ;
+        lv2:portProperty epp:hasStrictBounds ;
+        epp:rangeSteps 999 ;
+	lv2:default 0.5 ;
+	lv2:minimum 0 ;
+	lv2:maximum 1 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:ControlPort ;
+	lv2:index 0 ;
+	lv2:symbol "Q" ;
+	lv2:name "Q" ;
+        lv2:portProperty epp:hasStrictBounds ;
+        epp:rangeSteps 2429 ;
+	lv2:default 1 ;
+	lv2:minimum 0.7072 ;
+	lv2:maximum 25 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:CVPort ;
+	lv2:index 2 ;
+	lv2:symbol "cutoff_cv" ;
+	lv2:name "Cutoff CV" ;
+    lv2:default 0.0 ;
+    lv2:minimum 0.0 ;
+    lv2:maximum 1.0 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:CVPort ;
+	lv2:index 3 ;
+	lv2:symbol "q_cv" ;
+	lv2:name "Q CV" ;
+    lv2:default 0.0 ;
+    lv2:minimum 0.0 ;
+    lv2:maximum 1.0 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:AudioPort ;
+	lv2:index 4 ;
+	lv2:symbol "in" ;
+	lv2:name "in" ;
+    ] , [
+	a lv2:OutputPort ;
+	a lv2:AudioPort ;
+	lv2:index 5 ;
+	lv2:symbol "out" ;
+	lv2:name "out" ;
+    ] .
+
+polyfilter:moog_half_ladder
+       a lv2:Plugin ;
+       doap:name "moog half ladder" ;
+       doap:license <http://opensource.org/licenses/gpl> ;
+       lv2:binary <poly_filter.so> ;
+       lv2:optionalFeature epp:supportsStrictBounds ;
+       lv2:optionalFeature lv2:hardRtCapable ;
+       doap:maintainer [ foaf:name "Loki Davison" ] ;
+       rdfs:comment "faust moog half ladder" ;
+    lv2:port [
+	a lv2:InputPort ;
+	a lv2:ControlPort ;
+	lv2:index 0 ;
+	lv2:symbol "cutoff" ;
+	lv2:name "cutoff" ;
+        lv2:portProperty epp:hasStrictBounds ;
+        epp:rangeSteps 999 ;
+	lv2:default 0.5 ;
+	lv2:minimum 0 ;
+	lv2:maximum 1 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:ControlPort ;
+	lv2:index 0 ;
+	lv2:symbol "Q" ;
+	lv2:name "Q" ;
+        lv2:portProperty epp:hasStrictBounds ;
+        epp:rangeSteps 2429 ;
+	lv2:default 1 ;
+	lv2:minimum 0.7072 ;
+	lv2:maximum 25 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:CVPort ;
+	lv2:index 2 ;
+	lv2:symbol "cutoff_cv" ;
+	lv2:name "Cutoff CV" ;
+    lv2:default 0.0 ;
+    lv2:minimum 0.0 ;
+    lv2:maximum 1.0 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:CVPort ;
+	lv2:index 3 ;
+	lv2:symbol "q_cv" ;
+	lv2:name "Q CV" ;
+    lv2:default 0.0 ;
+    lv2:minimum 0.0 ;
+    lv2:maximum 1.0 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:AudioPort ;
+	lv2:index 4 ;
+	lv2:symbol "in" ;
+	lv2:name "in" ;
+    ] , [
+	a lv2:OutputPort ;
+	a lv2:AudioPort ;
+	lv2:index 5 ;
+	lv2:symbol "out" ;
+	lv2:name "out" ;
+    ] .
+
+polyfilter:oberheim
+       a lv2:Plugin ;
+       doap:name "oberheim filter" ;
+       doap:license <http://opensource.org/licenses/gpl> ;
+       lv2:binary <poly_filter.so> ;
+       lv2:optionalFeature epp:supportsStrictBounds ;
+       lv2:optionalFeature lv2:hardRtCapable ;
+       doap:maintainer [ foaf:name "Loki Davison" ] ;
+       rdfs:comment "faust oberheim filter" ;
+    lv2:port [
+	a lv2:InputPort ;
+	a lv2:ControlPort ;
+	lv2:index 0 ;
+	lv2:symbol "cutoff" ;
+	lv2:name "cutoff" ;
+        lv2:portProperty epp:hasStrictBounds ;
+        epp:rangeSteps 999 ;
+	lv2:default 0.5 ;
+	lv2:minimum 0 ;
+	lv2:maximum 1 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:ControlPort ;
+	lv2:index 0 ;
+	lv2:symbol "Q" ;
+	lv2:name "Q" ;
+        lv2:portProperty epp:hasStrictBounds ;
+        epp:rangeSteps 2429 ;
+	lv2:default 1 ;
+	lv2:minimum 0.5 ;
+	lv2:maximum 10 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:CVPort ;
+	lv2:index 2 ;
+	lv2:symbol "cutoff_cv" ;
+	lv2:name "Cutoff CV" ;
+    lv2:default 0.0 ;
+    lv2:minimum 0.0 ;
+    lv2:maximum 1.0 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:CVPort ;
+	lv2:index 3 ;
+	lv2:symbol "q_cv" ;
+	lv2:name "Q CV" ;
+    lv2:default 0.0 ;
+    lv2:minimum 0.0 ;
+    lv2:maximum 1.0 ;
+    ] , [
+	a lv2:InputPort ;
+	a lv2:AudioPort ;
+	lv2:index 4 ;
+	lv2:symbol "in" ;
+	lv2:name "in" ;
+    ] , [
+	a lv2:OutputPort ;
+	a lv2:AudioPort ;
+	lv2:index 5 ;
+	lv2:symbol "low_pass" ;
+	lv2:name "Low Pass" ;
+    ] , [
+	a lv2:OutputPort ;
+	a lv2:AudioPort ;
+	lv2:index 6 ;
+	lv2:symbol "high_pass" ;
+	lv2:name "High Pass" ;
+    ] , [
+	a lv2:OutputPort ;
+	a lv2:AudioPort ;
+	lv2:index 7 ;
+	lv2:symbol "band_pass" ;
+	lv2:name "Band Pass" ;
+    ] , [
+	a lv2:OutputPort ;
+	a lv2:AudioPort ;
+	lv2:index 8 ;
+	lv2:symbol "band_stop" ;
+	lv2:name "Band Stop" ;
+    ] .
+
